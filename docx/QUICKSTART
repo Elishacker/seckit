@@ -1,0 +1,217 @@
+#!/bin/bash
+# QUICK START CARD - Print this out!
+
+cat << 'EOF'
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                       QUICK START CARD - KEEP HANDY                        ║
+║              Reconnaissance & Vulnerability Scanner v1.0                   ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 1. INITIAL SETUP                                                           │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│   $ cd ~/Scripts                                                           │
+│   $ bash setup-dependencies.sh                                             │
+│   $ chmod +x *.sh                                                          │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 2. YOUR FIRST SCAN                                                         │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│   $ ./recon-vuln-scanner.sh -t example.com                                 │
+│                                                                            │
+│   Wait 5-10 minutes... then check results:                                 │
+│   $ cat scan_results/scan_report_*.txt                                     │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 3. ANALYZE RESULTS                                                         │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│   $ ./vulnerability-analyzer.sh -t example.com                             │
+│   $ cat analysis_reports/analysis_*.txt                                    │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 4. COMMON COMMANDS                                                         │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│  PORTS:        ./recon-vuln-scanner.sh -t DOMAIN -s ports                  │
+│  DIRECTORIES:  ./recon-vuln-scanner.sh -t DOMAIN -s directories            │
+│  SUBDOMAINS:   ./recon-vuln-scanner.sh -t DOMAIN -s subdomains            │
+│  VULN CHECK:   ./recon-vuln-scanner.sh -t DOMAIN -s vuln                   │
+│  ALL:          ./recon-vuln-scanner.sh -t DOMAIN                           │
+│  VERBOSE:      ./recon-vuln-scanner.sh -t DOMAIN -v                        │
+│  FAST (1000P): ./recon-vuln-scanner.sh -t DOMAIN -p 1-1000                 │
+│  FULL (ALL P): ./recon-vuln-scanner.sh -t DOMAIN -p 1-65535                │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 5. HELP                                                                    │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│  $ ./recon-vuln-scanner.sh -h           (Show main help)                   │
+│  $ ./vulnerability-analyzer.sh -h       (Analyzer help)                    │
+│  $ cat README.md                        (Full documentation)               │
+│  $ cat QUICK-REFERENCE.md               (Command examples)                 │
+│  $ cat GETTING-STARTED.md               (Complete setup guide)             │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║ KEY POINTS                                                                 ║
+├────────────────────────────────────────────────────────────────────────────┤
+║                                                                            ║
+║ ✓ GET AUTHORIZATION FIRST - Never scan without permission!                ║
+║ ✓ Results go to scan_results/ with timestamps                             ║
+║ ✓ Use vulnerability-analyzer.sh to understand findings                    ║
+║ ✓ Start with -s ports for quick reconnaissance                            ║
+║ ✓ Use -s vuln for vulnerability assessment                                ║
+║ ✓ Check logs in scan_results/scan_log_*.log for troubleshooting          ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ WHAT EACH SCAN TYPE FINDS                                                  │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│ PORTS        → Open services, software versions, OS info                   │
+│ DIRECTORIES  → Web paths, admin panels, backup files                       │
+│ SUBDOMAINS   → Related systems, DNS configuration                          │
+│ VULN         → OWASP Top 10 vulnerabilities (SQL injection, XSS, etc)     │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ TROUBLESHOOTING                                                            │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│ Issue: "command not found: nmap"                                           │
+│   → Fix: bash setup-dependencies.sh  OR  sudo apt-get install nmap         │
+│                                                                            │
+│ Issue: "Permission denied"                                                 │
+│   → Fix: chmod +x *.sh                                                     │
+│                                                                            │
+│ Issue: No response from target                                             │
+│   → Check: ping example.com                                                │
+│   → Or:    nc -zv example.com 80                                           │
+│                                                                            │
+│ Issue: Slow scanning                                                       │
+│   → Use: -p 1-1000 for limited ports                                       │
+│   → Or:  -T 5 for fewer threads                                            │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                         WORKFLOW EXAMPLES                                  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+SCENARIO 1: Quick Web App Check (5 minutes)
+─────────────────────────────────────────
+  1. ./recon-vuln-scanner.sh -t myapp.com -s vuln
+  2. ./vulnerability-analyzer.sh -t myapp.com
+  3. Review: cat scan_results/scan_report_*.txt
+
+SCENARIO 2: Deep Network Recon (30 minutes)
+──────────────────────────────────────────
+  1. ./recon-vuln-scanner.sh -t 192.168.1.100 -s all -T 20
+  2. Verify: grep "open" scan_results/nmap_*.txt
+  3. Analyze: ./vulnerability-analyzer.sh -t 192_168_1_100
+  4. Review all: ls -lah scan_results/
+
+SCENARIO 3: Subdomain & Infrastructure Mapping (10 minutes)
+──────────────────────────────────────────────────────────
+  1. ./recon-vuln-scanner.sh -t company.com -s subdomains
+  2. ./recon-vuln-scanner.sh -t company.com -s ports
+  3. Check: grep -r "company.com" scan_results/
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                      OWASP TOP 10 QUICK GUIDE                              ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+This tool tests for these common vulnerabilities:
+
+ 1. SQL Injection       → Input characters: ' OR '1'='1
+ 2. XSS (Cross-Site)   → JavaScript injection: <script>alert(1)</script>
+ 3. Authentication     → Weak passwords, no MFA
+ 4. Sensitive Data     → Missing HTTPS, no security headers
+ 5. Access Control     → Unauthorized path access
+ 6. XXE (XML Exploit)  → XML external entity processing
+ 7. Deserialization    → Unsafe object unmarshaling
+ 8. Weak Components    → Old software with known exploits
+ 9. Broken Auth        → Default credentials, session flaws
+10. Insufficient Logs  → Exposed log files, no security monitoring
+
+Run: ./recon-vuln-scanner.sh -t target.com -s vuln
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                         IMPORTANT REMINDERS                                ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+⚠️  LEGAL: Just because you CAN scan something doesn't mean you SHOULD!
+   
+    Always get written authorization before testing ANY system.
+    Unauthorized hacking is illegal in virtually all jurisdictions.
+    
+    This tool is for legitimate security professionals only.
+
+📋 RESULTS LOCATION: ~/Scripts/scan_results/
+
+💾 IMPORTANT FILES:
+   - scan_report_*.txt     → Main findings
+   - scan_log_*.log        → Detailed activity log
+   - nmap_*.txt            → Port scan results
+   - vulnerabilities_*.txt → Security findings
+
+🚀 NEXT STEPS:
+   1. Read: GETTING-STARTED.md
+   2. Setup: bash setup-dependencies.sh
+   3. Test: ./recon-vuln-scanner.sh -t localhost -s ports
+   4. Learn: Read README.md for detailed help
+
+📞 DOCUMENTATION:
+   - INDEX.md             → Complete overview
+   - README.md            → Full documentation
+   - QUICK-REFERENCE.md   → Command examples
+   - GETTING-STARTED.md   → Setup & learning path
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                     YOU'RE READY TO BEGIN!                                 ║
+║                                                                            ║
+║  Start with: cd ~/Scripts && bash setup-dependencies.sh                    ║
+║                                                                            ║
+║  Then run:   ./recon-vuln-scanner.sh -t example.com                        ║
+║                                                                            ║
+║  Questions? Check: GETTING-STARTED.md                                      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+EOF
+
+# Print version info
+echo ""
+echo "═══════════════════════════════════════════════════════════════════════════"
+echo "INSTALLED TOOLS:"
+echo "═══════════════════════════════════════════════════════════════════════════"
+echo ""
+echo "Main Scanner:        recon-vuln-scanner.sh ($(wc -l < recon-vuln-scanner.sh) lines)"
+echo "Analyzer:            vulnerability-analyzer.sh ($(wc -l < vulnerability-analyzer.sh) lines)"
+echo "Setup Script:        setup-dependencies.sh ($(wc -l < setup-dependencies.sh) lines)"
+echo ""
+echo "Documentation:"
+for doc in README.md GETTING-STARTED.md QUICK-REFERENCE.md GETTING-STARTED.md config.template INDEX.md; do
+    if [[ -f "$doc" ]]; then
+        lines=$(wc -l < "$doc")
+        printf "  %-30s (%4d lines)\n" "$doc" "$lines"
+    fi
+done
+echo ""
+echo "═══════════════════════════════════════════════════════════════════════════"
+echo "Total: ~2,756 lines of professional security testing code"
+echo "═══════════════════════════════════════════════════════════════════════════"

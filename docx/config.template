@@ -1,0 +1,182 @@
+# Reconnaissance Scanner Configuration Template
+# Copy this file and customize for your specific needs
+# Usage: source this file in your scan scripts or set environment variables
+
+# ============================================================================
+# SCAN CONFIGURATION
+# ============================================================================
+
+# Target(s) to scan (can be single or space-separated list)
+# TARGETS="example.com 192.168.1.100 another-target.com"
+TARGETS=""
+
+# Scan type: all, ports, directories, subdomains, vuln
+SCAN_TYPE="all"
+
+# ============================================================================
+# PORT SCANNING
+# ============================================================================
+
+# Port ranges to scan
+# Examples: "1-65535" (all), "1-1000" (common), "22,80,443" (specific)
+PORT_RANGE="1-65535"
+
+# Nmap aggressive scan level (0-5, higher = more aggressive)
+NMAP_TIMING="-T3"  # T0=paranoid, T1=sneaky, T2=polite, T3=normal, T4=aggressive, T5=insane
+
+# Include UDP scanning (yes/no)
+USE_UDP_SCAN="no"
+
+# ============================================================================
+# DIRECTORY ENUMERATION
+# ============================================================================
+
+# Custom wordlist path (leave empty to use default)
+# CUSTOM_WORDLIST="/path/to/custom/wordlist.txt"
+CUSTOM_WORDLIST=""
+
+# HTTP status codes to report (comma-separated)
+# Default: all non-404 responses
+REPORT_HTTP_CODES="200,301,302,403,500,502,503"
+
+# Custom directories to check (in addition to wordlist)
+CUSTOM_DIRS=("/admin" "/api" "/backup" "/config" "/database" "/logs")
+
+# ============================================================================
+# SUBDOMAIN ENUMERATION
+# ============================================================================
+
+# Include reverse DNS lookup for IPs (yes/no)
+REVERSE_DNS_LOOKUP="yes"
+
+# Custom subdomains to check (in addition to common list)
+CUSTOM_SUBDOMAINS=("")
+
+# DNS nameserver to query (leave empty for default)
+# DNS_SERVER="8.8.8.8"
+DNS_SERVER=""
+
+# ============================================================================
+# VULNERABILITY SCANNING
+# ============================================================================
+
+# OWASP Top 10 checks to perform (space-separated)
+# all, sqli, xss, auth, exposure, access, xxe, serial, components, logging
+VULN_CHECKS="all"
+
+# Aggressive payload testing (yes/no)
+AGGRESSIVE_VULN_TEST="no"
+
+# Default credentials to test
+DEFAULT_CREDS=(
+    "admin:admin"
+    "admin:password"
+    "admin:123456"
+    "root:root"
+    "root:toor"
+)
+
+# ============================================================================
+# THREADING & PERFORMANCE
+# ============================================================================
+
+# Number of parallel threads
+THREADS=10
+
+# Connection timeout for curl requests (seconds)
+CURL_TIMEOUT=5
+
+# Maximum retries for failed requests
+MAX_RETRIES=2
+
+# ============================================================================
+# OUTPUT & REPORTING
+# ============================================================================
+
+# Output directory
+OUTPUT_DIR="./scan_results"
+
+# Report format: txt, json, html (txt supported, others require plugins)
+REPORT_FORMAT="txt"
+
+# Verbose output (yes/no)
+VERBOSE="no"
+
+# Include raw tool output (yes/no)
+INCLUDE_RAW_OUTPUT="yes"
+
+# Save HTML report (yes/no)
+SAVE_HTML_REPORT="no"
+
+# ============================================================================
+# ADVANCED OPTIONS
+# ============================================================================
+
+# Proxy configuration (leave empty for direct connection)
+# PROXY="http://proxy.example.com:8080"
+PROXY=""
+
+# Proxy authentication
+# PROXY_AUTH="username:password"
+PROXY_AUTH=""
+
+# Custom user agent
+USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
+# Custom HTTP headers (comma-separated)
+CUSTOM_HEADERS=""
+
+# Save intermediate results (yes/no)
+SAVE_INTERMEDIATE="yes"
+
+# Compress results after scan (yes/no)
+COMPRESS_RESULTS="no"
+
+# Keep logs longer than 30 days (yes/no)
+KEEP_OLD_LOGS="yes"
+
+# ============================================================================
+# FILTERING & EXCLUSIONS
+# ============================================================================
+
+# Exclude IPs from scanning (CIDR notation)
+EXCLUDE_IPS=("")
+
+# Exclude ports from scanning (comma-separated)
+EXCLUDE_PORTS=""
+
+# Exclude file extensions from directory scan
+EXCLUDE_EXTENSIONS=("jpg" "jpeg" "png" "gif" "css" "js" "ico" "map")
+
+# ============================================================================
+# NOTIFICATIONS
+# ============================================================================
+
+# Send email on completion (yes/no)
+SEND_EMAIL="no"
+
+# Email recipient
+EMAIL_RECIPIENT="admin@example.com"
+
+# Email subject template
+EMAIL_SUBJECT="Scan Report: {TARGET} - {DATE}"
+
+# Alert on critical findings (yes/no)
+ALERT_ON_CRITICAL="yes"
+
+# ============================================================================
+# DEBUGGING
+# ============================================================================
+
+# Debug mode (yes/no)
+DEBUG_MODE="no"
+
+# Log level: DEBUG, INFO, WARN, ERROR
+LOG_LEVEL="INFO"
+
+# Keep temporary files (yes/no)
+KEEP_TEMP_FILES="no"
+
+# ============================================================================
+# END OF CONFIGURATION
+# ============================================================================
