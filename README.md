@@ -73,28 +73,29 @@ brew install nmap curl bind-tools python3
 
 ## Installation
 
-1. **Download the script:**
+1. **Clone the repository:**
 ```bash
-git clone <repo-url> ~/security-tools
-cd ~/security-tools
+git clone git@github.com:Elishacker/3lishack3r.git ~/3lishack3r
+cd ~/3lishack3r
+chmod +x *.sh
 ```
 
-Or manually copy the script to your Scripts directory:
+2. **Run setup script (installs dependencies):**
 ```bash
-cp recon-vuln-scanner.sh ~/Scripts/
-chmod +x ~/Scripts/recon-vuln-scanner.sh
+./1_setup.sh
 ```
 
-2. **Optional: Add to PATH**
+3. **Optional: Add to PATH**
 ```bash
-sudo cp recon-vuln-scanner.sh /usr/local/bin/recon-scanner
+sudo cp 2_scanner.sh /usr/local/bin/3lishacker-scanner
+sudo chown root:root /usr/local/bin/3lishacker-scanner
 ```
 
 ## Usage
 
 ### Basic Syntax
 ```bash
-./recon-vuln-scanner.sh [OPTIONS]
+./2_scanner.sh [OPTIONS]
 ```
 
 ### Options
@@ -113,42 +114,42 @@ sudo cp recon-vuln-scanner.sh /usr/local/bin/recon-scanner
 
 **1. Full Reconnaissance Scan (All Modules)**
 ```bash
-./recon-vuln-scanner.sh -t example.com
+./2_scanner.sh -t example.com
 ```
 
 **2. Port Scan Only (Limited Range)**
 ```bash
-./recon-vuln-scanner.sh -t 192.168.1.100 -s ports -p 1-5000
+./2_scanner.sh -t 192.168.1.100 -s ports -p 1-5000
 ```
 
 **3. Specific Ports**
 ```bash
-./recon-vuln-scanner.sh -t example.com -s ports -p 22,80,443,8080,8443
+./2_scanner.sh -t example.com -s ports -p 22,80,443,8080,8443
 ```
 
 **4. Directory Enumeration**
 ```bash
-./recon-vuln-scanner.sh -t example.com -s directories
+./2_scanner.sh -t example.com -s directories
 ```
 
 **5. Subdomain Discovery**
 ```bash
-./recon-vuln-scanner.sh -t example.com -s subdomains
+./2_scanner.sh -t example.com -s subdomains
 ```
 
 **6. OWASP Vulnerability Scan**
 ```bash
-./recon-vuln-scanner.sh -t example.com -s vuln
+./2_scanner.sh -t example.com -s vuln
 ```
 
 **7. Full Scan with Verbose Output**
 ```bash
-./recon-vuln-scanner.sh -t 192.168.1.100 -s all -v
+./2_scanner.sh -t 192.168.1.100 -s all -v
 ```
 
 **8. Scan with Multiple Threads**
 ```bash
-./recon-vuln-scanner.sh -t example.com -s all -T 20
+./2_scanner.sh -t example.com -s all -T 20
 ```
 
 ## Output and Reporting
@@ -221,34 +222,40 @@ This tool is intended for authorized security testing only. Unauthorized access 
 Place custom wordlists in the `scan_results/` directory and reference them:
 ```bash
 cp my_wordlist.txt scan_results/directory_wordlist.txt
-./recon-vuln-scanner.sh -t target.com -s directories
+./2_scanner.sh -t target.com -s directories
 ```
 
 ### Combining Scans
 ```bash
 # Scan web services first, then directories
-./recon-vuln-scanner.sh -t example.com -s ports
-./recon-vuln-scanner.sh -t example.com -s directories
+./2_scanner.sh -t example.com -s ports
+./2_scanner.sh -t example.com -s directories
+```
+
+### Generate Analysis Report
+```bash
+# After scanning, analyze results with the analyzer script
+./3_analyzer.sh
 ```
 
 ### Scheduling Regular Scans
 ```bash
 # Add to crontab for daily scans
-0 2 * * * /home/user/Scripts/recon-vuln-scanner.sh -t example.com >> /var/log/recon-scanner.log 2>&1
+0 2 * * * /home/user/3lishack3r/2_scanner.sh -t example.com >> /var/log/3lishacker-scan.log 2>&1
 ```
 
 ## Troubleshooting
 
 ### "nmap not found" Error
 ```bash
-# Install nmap
-sudo apt-get install nmap
+# Run the setup script to install dependencies
+./1_setup.sh
 ```
 
 ### "Permission denied" Error
 ```bash
-# Make script executable
-chmod +x recon-vuln-scanner.sh
+# Make all scripts executable
+chmod +x *.sh
 ```
 
 ### No results or "Connection timeout"
@@ -259,7 +266,8 @@ chmod +x recon-vuln-scanner.sh
 
 ### Insufficient privileges for some scans
 - Some features require root/sudo
-- Run with: `sudo ./recon-vuln-scanner.sh -t target.com`
+- Run with: `sudo ./2_scanner.sh -t target.com`
+- For full privilege access: `sudo ./1_setup.sh` then `sudo ./2_scanner.sh -t target.com`
 
 ### Slow scans
 - Reduce port range with `-p` option
@@ -270,7 +278,7 @@ chmod +x recon-vuln-scanner.sh
 
 1. **Limit port range** for faster scans:
    ```bash
-   ./recon-vuln-scanner.sh -t target.com -s ports -p 1-1000
+   ./2_scanner.sh -t target.com -s ports -p 1-1000
    ```
 
 2. **Use specific scan types** instead of full scans when possible
@@ -319,16 +327,26 @@ Identifies exposed logging endpoints that could leak sensitive information.
 ## File Structure
 
 ```
-~/Scripts/
-├── recon-vuln-scanner.sh          # Main scanner script
-├── README.md                       # This file
-└── scan_results/                   # Output directory (auto-created)
-    ├── scan_report_*.txt
-    ├── scan_log_*.txt
-    ├── nmap_*.txt
-    ├── directories_*.txt
-    ├── subdomains_*.txt
-    └── vulnerabilities_*.txt
+3lishack3r/
+├── 1_setup.sh                     # Dependency installation script
+├── 2_scanner.sh                   # Main reconnaissance & vulnerability scanner
+├── 3_analyzer.sh                  # Vulnerability analyzer & report generator
+├── README.md                      # This file
+├── LICENSE                        # License file
+├── scan_results/                  # Scanner output directory (auto-created)
+│   ├── scan_report_*.txt
+│   ├── scan_log_*.txt
+│   ├── nmap_*.txt
+│   ├── directories_*.txt
+│   ├── subdomains_*.txt
+│   └── vulnerabilities_*.txt
+├── analysis_reports/              # Analyzer output directory (auto-created)
+│   └── analysis_*.txt
+└── docx/                          # Documentation files
+    ├── GETTING-STARTED.md
+    ├── QUICK-REFERENCE.md
+    ├── QUICKSTART
+    └── TOOLKIT-SUMMARY.md
 ```
 
 ## Contributing
@@ -339,6 +357,12 @@ To improve this tool:
 3. Suggest additional checks or methods
 4. Share wordlists and payloads (responsibly)
 
+## Workflow
+
+1. **Setup** - Run `./1_setup.sh` to install all dependencies
+2. **Scan** - Run `./2_scanner.sh -t <target>` to perform reconnaissance and vulnerability scanning
+3. **Analyze** - Run `./3_analyzer.sh` to generate comprehensive reports from scan results
+
 ## Version History
 
 - **v1.0** - Initial release
@@ -346,6 +370,7 @@ To improve this tool:
   - Directory enumeration
   - Subdomain discovery
   - OWASP Top 10 vulnerability assessment
+  - Vulnerability analysis and report generation
 
 ## License
 
