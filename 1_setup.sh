@@ -34,12 +34,12 @@ cat << "EOF"
     ╚══════╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
     
     ╔══════════════════════════════════════════════════════════════╗
-    ║     RECON SCANNER - DEPENDENCY SETUP                        ║
+    ║     3lishack3r - DEPENDENCY SETUP                           ║
     ║   Professional Vulnerability Assessment Tool                ║
     ║     Developed By Elifaster InfoSec                          ║
     ║                                                              ║
     ║  This script will install all required dependencies for     ║
-    ║  the Reconnaissance & Vulnerability Scanner                 ║
+    ║  3lishack3r Reconnaissance & Vulnerability Scanner          ║
     ╚══════════════════════════════════════════════════════════════╝
     
 EOF
@@ -156,14 +156,17 @@ if [[ $MISSING -eq 0 ]]; then
     echo -e "${GREEN}═════════════════════════════════════════════════════════${NC}"
     
     echo -e "\n${BLUE}Quick Start:${NC}"
-    echo "  1. Make sure recon-vuln-scanner.sh is executable:"
-    echo "     chmod +x /home/r3dh4t/Scripts/recon-vuln-scanner.sh"
+    echo "  1. Make sure all scripts are executable:"
+    echo "     chmod +x *.sh"
     echo ""
     echo "  2. Run a basic scan:"
-    echo "     ./recon-vuln-scanner.sh -t example.com"
+    echo "     ./2_scanner.sh -t example.com"
     echo ""
-    echo "  3. For help, run:"
-    echo "     ./recon-vuln-scanner.sh -h"
+    echo "  3. Generate analysis reports:"
+    echo "     ./3_analyzer.sh"
+    echo ""
+    echo "  4. For help, run:"
+    echo "     ./2_scanner.sh -h"
     echo ""
 else
     echo -e "\n${RED}═════════════════════════════════════════════════════════${NC}"
@@ -175,4 +178,5 @@ fi
 
 echo -e "\n${BLUE}For detailed information, see:${NC}"
 echo "  - README.md"
-echo "  - ./recon-vuln-scanner.sh -h"
+echo "  - ./2_scanner.sh -h"
+echo "  - ./docx/ (documentation files)"
