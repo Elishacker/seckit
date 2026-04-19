@@ -1,0 +1,3 @@
+[2026-04-19 23:05:37] [INFO] Starting reconnaissance and vulnerability scan on staging.microlend.online
+[2026-04-19 23:05:37] [INFO] Scan initiated for target: staging.microlend.online
+[2026-04-19 23:05:37] [ERROR] Unknown scan type: vulnerability
