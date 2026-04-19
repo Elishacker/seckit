@@ -1,0 +1,16 @@
+Clickjacking: X-Frame-Options header missing
+Missing Headers: HSTS CSP X-Content-Type-Options
+Broken AC: /admin accessible
+Broken AC: /administrator accessible
+Broken AC: /wp-admin accessible
+Broken AC: /control accessible
+Broken AC: /dashboard accessible
+[NOTE] Manual XXE testing required for specific endpoints
+Weak Auth: admin:admin might work
+Weak Auth: admin:password might work
+Weak Auth: admin:123456 might work
+Weak Auth: root:root might work
+Server: nginx/1.29.8
+Log Exposure: /logs accessible
+Log Exposure: /access.log accessible
+Log Exposure: /var/log accessible
