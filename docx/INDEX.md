@@ -1,4 +1,4 @@
-# 🛡️ Reconnaissance & Vulnerability Scanner Toolkit
+# 🛡️ SecKit - Security Toolkit
 ## Professional Security Assessment Suite
 
 ---
@@ -7,19 +7,13 @@
 
 A **complete, production-ready cybersecurity toolkit** for professional reconnaissance and vulnerability assessment.
 
-### Core Components
+### Core Component
 
-| Component | Purpose | Lines | Status |
-|-----------|---------|-------|--------|
-| **recon-vuln-scanner.sh** | Main scanner tool | 674 | ✓ Ready |
-| **vulnerability-analyzer.sh** | Results analyzer | 428 | ✓ Ready |
-| **setup-dependencies.sh** | Dependency installer | 169 | ✓ Ready |
-| **README.md** | Full documentation | 374 | ✓ Ready |
-| **GETTING-STARTED.md** | Setup guide | 619 | ✓ Ready |
-| **QUICK-REFERENCE.md** | Command cheat sheet | 310 | ✓ Ready |
-| **config.template** | Configuration options | 182 | ✓ Ready |
+| Component | Purpose | Status |
+|-----------|---------|--------|
+| **seckit** | All-in-one: Setup, Scanning, Analysis | ✓ Ready |
 
-**Total Code: 2,756 lines of production-quality Bash**
+**Total Code: Production-quality Bash with integrated functionality**
 
 ---
 
@@ -27,18 +21,17 @@ A **complete, production-ready cybersecurity toolkit** for professional reconnai
 
 ### Step 1: Install Dependencies
 ```bash
-cd ~/Scripts
-bash setup-dependencies.sh
+./seckit start
 ```
 
 ### Step 2: Run Your First Scan
 ```bash
-./recon-vuln-scanner.sh -t example.com
+./seckit -t example.com
 ```
 
 ### Step 3: Analyze Results
 ```bash
-./vulnerability-analyzer.sh -t example.com
+./seckit analyse
 ```
 
 ---

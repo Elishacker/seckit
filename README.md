@@ -77,25 +77,31 @@ brew install nmap curl bind-tools python3
 ```bash
 git clone git@github.com:Elishacker/3lishack3r.git ~/3lishack3r
 cd ~/3lishack3r
-chmod +x *.sh
+chmod +x seckit 3_analyzer.sh
 ```
 
-2. **Run setup script (installs dependencies):**
+2. **Run setup to install dependencies:**
 ```bash
-./1_setup.sh
+./seckit start
 ```
 
 3. **Optional: Add to PATH**
 ```bash
-sudo cp 2_scanner.sh /usr/local/bin/3lishacker-scanner
-sudo chown root:root /usr/local/bin/3lishacker-scanner
+sudo cp seckit /usr/local/bin/seckit
+sudo chown root:root /usr/local/bin/seckit
 ```
 
 ## Usage
 
+### Initialization
+```bash
+./seckit start
+```
+This installs all required dependencies (nmap, curl, dnsutils, python3).
+
 ### Basic Syntax
 ```bash
-./2_scanner.sh [OPTIONS]
+./seckit [OPTIONS]
 ```
 
 ### Options
@@ -114,42 +120,42 @@ sudo chown root:root /usr/local/bin/3lishacker-scanner
 
 **1. Full Reconnaissance Scan (All Modules)**
 ```bash
-./2_scanner.sh -t example.com
+./seckit -t example.com
 ```
 
 **2. Port Scan Only (Limited Range)**
 ```bash
-./2_scanner.sh -t 192.168.1.100 -s ports -p 1-5000
+./seckit -t 192.168.1.100 -s ports -p 1-5000
 ```
 
 **3. Specific Ports**
 ```bash
-./2_scanner.sh -t example.com -s ports -p 22,80,443,8080,8443
+./seckit -t example.com -s ports -p 22,80,443,8080,8443
 ```
 
 **4. Directory Enumeration**
 ```bash
-./2_scanner.sh -t example.com -s directories
+./seckit -t example.com -s directories
 ```
 
 **5. Subdomain Discovery**
 ```bash
-./2_scanner.sh -t example.com -s subdomains
+./seckit -t example.com -s subdomains
 ```
 
 **6. OWASP Vulnerability Scan**
 ```bash
-./2_scanner.sh -t example.com -s vuln
+./seckit -t example.com -s vuln
 ```
 
 **7. Full Scan with Verbose Output**
 ```bash
-./2_scanner.sh -t 192.168.1.100 -s all -v
+./seckit -t 192.168.1.100 -s all -v
 ```
 
 **8. Scan with Multiple Threads**
 ```bash
-./2_scanner.sh -t example.com -s all -T 20
+./seckit -t example.com -s all -T 20
 ```
 
 ## Output and Reporting
@@ -222,14 +228,14 @@ This tool is intended for authorized security testing only. Unauthorized access 
 Place custom wordlists in the `scan_results/` directory and reference them:
 ```bash
 cp my_wordlist.txt scan_results/directory_wordlist.txt
-./2_scanner.sh -t target.com -s directories
+./seckit -t target.com -s directories
 ```
 
 ### Combining Scans
 ```bash
 # Scan web services first, then directories
-./2_scanner.sh -t example.com -s ports
-./2_scanner.sh -t example.com -s directories
+./seckit -t example.com -s ports
+./seckit -t example.com -s directories
 ```
 
 ### Generate Analysis Report
@@ -241,21 +247,21 @@ cp my_wordlist.txt scan_results/directory_wordlist.txt
 ### Scheduling Regular Scans
 ```bash
 # Add to crontab for daily scans
-0 2 * * * /home/user/3lishack3r/2_scanner.sh -t example.com >> /var/log/3lishacker-scan.log 2>&1
+0 2 * * * /home/user/3lishack3r/seckit -t example.com >> /var/log/seckit-scan.log 2>&1
 ```
 
 ## Troubleshooting
 
 ### "nmap not found" Error
 ```bash
-# Run the setup script to install dependencies
-./1_setup.sh
+# Run the setup command to install dependencies
+./seckit start
 ```
 
 ### "Permission denied" Error
 ```bash
-# Make all scripts executable
-chmod +x *.sh
+# Make seckit executable
+chmod +x seckit
 ```
 
 ### No results or "Connection timeout"
@@ -266,8 +272,8 @@ chmod +x *.sh
 
 ### Insufficient privileges for some scans
 - Some features require root/sudo
-- Run with: `sudo ./2_scanner.sh -t target.com`
-- For full privilege access: `sudo ./1_setup.sh` then `sudo ./2_scanner.sh -t target.com`
+- Run with: `sudo ./seckit -t target.com`
+- For full privilege access: `sudo ./seckit start` then `sudo ./seckit -t target.com`
 
 ### Slow scans
 - Reduce port range with `-p` option
@@ -278,7 +284,7 @@ chmod +x *.sh
 
 1. **Limit port range** for faster scans:
    ```bash
-   ./2_scanner.sh -t target.com -s ports -p 1-1000
+   ./seckit -t target.com -s ports -p 1-1000
    ```
 
 2. **Use specific scan types** instead of full scans when possible
@@ -328,21 +334,20 @@ Identifies exposed logging endpoints that could leak sensitive information.
 
 ```
 3lishack3r/
-├── 1_setup.sh                     # Dependency installation script
-├── 2_scanner.sh                   # Main reconnaissance & vulnerability scanner
-├── 3_analyzer.sh                  # Vulnerability analyzer & report generator
-├── README.md                      # This file
-├── LICENSE                        # License file
-├── scan_results/                  # Scanner output directory (auto-created)
+├── seckit                       # Combined setup & scanner (all-in-one)
+├── 3_analyzer.sh                # Vulnerability analyzer & report generator
+├── README.md                    # This file
+├── LICENSE                      # License file
+├── scan_results/                # Scanner output directory (auto-created)
 │   ├── scan_report_*.txt
 │   ├── scan_log_*.txt
 │   ├── nmap_*.txt
 │   ├── directories_*.txt
 │   ├── subdomains_*.txt
 │   └── vulnerabilities_*.txt
-├── analysis_reports/              # Analyzer output directory (auto-created)
+├── analysis_reports/            # Analyzer output directory (auto-created)
 │   └── analysis_*.txt
-└── docx/                          # Documentation files
+└── docx/                        # Documentation files
     ├── GETTING-STARTED.md
     ├── QUICK-REFERENCE.md
     ├── QUICKSTART
@@ -359,8 +364,8 @@ To improve this tool:
 
 ## Workflow
 
-1. **Setup** - Run `./1_setup.sh` to install all dependencies
-2. **Scan** - Run `./2_scanner.sh -t <target>` to perform reconnaissance and vulnerability scanning
+1. **Setup** - Run `./seckit start` to install all dependencies
+2. **Scan** - Run `./seckit -t <target>` to perform reconnaissance and vulnerability scanning
 3. **Analyze** - Run `./3_analyzer.sh` to generate comprehensive reports from scan results
 
 ## Version History
