@@ -1,56 +1,71 @@
-# Reconnaissance & Vulnerability Scanner - Quick Reference
+# SecKit - Quick Reference
 
 ## One-Liner Commands
+
+### Setup & Initialization
+```bash
+# Install dependencies (run once)
+./seckit start
+```
 
 ### Basic Scans
 ```bash
 # Full reconnaissance on domain
-./recon-vuln-scanner.sh -t example.com
+./seckit -t example.com
 
 # Full reconnaissance on IP
-./recon-vuln-scanner.sh -t 192.168.1.100
+./seckit -t 192.168.1.100
 
 # Full scan with verbose output
-./recon-vuln-scanner.sh -t target.com -v
+./seckit -t target.com -v
 ```
 
 ### Port Scanning
 ```bash
 # Scan top 1000 ports
-./recon-vuln-scanner.sh -t target.com -s ports -p 1-1000
+./seckit -t target.com -s ports -p 1-1000
 
 # Scan specific ports
-./recon-vuln-scanner.sh -t target.com -s ports -p 22,80,443,3306,5432
+./seckit -t target.com -s ports -p 22,80,443,3306,5432
 
 # Full port range scan
-./recon-vuln-scanner.sh -t target.com -s ports -p 1-65535
+./seckit -t target.com -s ports -p 1-65535
 ```
 
 ### Directory Enumeration
 ```bash
 # Standard directory brute force
-./recon-vuln-scanner.sh -t example.com -s directories
+./seckit -t example.com -s directories
 
 # With verbose output
-./recon-vuln-scanner.sh -t example.com -s directories -v
+./seckit -t example.com -s directories -v
 ```
 
 ### Subdomain Discovery
 ```bash
 # Enumerate subdomains
-./recon-vuln-scanner.sh -t example.com -s subdomains
+./seckit -t example.com -s subdomains
 
 # For IP addresses (reverse DNS)
-./recon-vuln-scanner.sh -t 192.168.1.100 -s subdomains
+./seckit -t 192.168.1.100 -s subdomains
 ```
 
 ### Vulnerability Scanning
 ```bash
 # OWASP Top 10 scan
-./recon-vuln-scanner.sh -t example.com -s vuln
+./seckit -t example.com -s vuln
 
 # With verbose output
-./recon-vuln-scanner.sh -t example.com -s vuln -v
+./seckit -t example.com -s vuln -v
+```
+
+### Analysis & Reporting
+```bash
+# Analyze latest scan results
+./seckit analyse
+
+# Generate professional report
+./seckit analyse
 ```
 
 ## Advanced Usage
@@ -58,30 +73,33 @@
 ### Multi-Threading
 ```bash
 # Faster scans with 20 threads
-./recon-vuln-scanner.sh -t example.com -T 20
+./seckit -t example.com -T 20
 
 # Conservative 5 threads
-./recon-vuln-scanner.sh -t example.com -T 5
+./seckit -t example.com -T 5
 ```
 
 ### Sequential Scanning
 ```bash
 # Ports first, then directories
-./recon-vuln-scanner.sh -t example.com -s ports
-./recon-vuln-scanner.sh -t example.com -s directories
+./seckit -t example.com -s ports
+./seckit -t example.com -s directories
 
 # All subdomains then vulnerabilities
-./recon-vuln-scanner.sh -t example.com -s subdomains
-./recon-vuln-scanner.sh -t example.com -s vuln
+./seckit -t example.com -s subdomains
+./seckit -t example.com -s vuln
 ```
 
 ### Full Investigation
 ```bash
 # Top ports with directories + subdomains + OWASP Top 10
-./recon-vuln-scanner.sh -t target.com -s ports -p 1-1000
-./recon-vuln-scanner.sh -t target.com -s directories
-./recon-vuln-scanner.sh -t target.com -s subdomains
-./recon-vuln-scanner.sh -t target.com -s vuln -v
+./seckit -t target.com -s ports -p 1-1000
+./seckit -t target.com -s directories
+./seckit -t target.com -s subdomains
+./seckit -t target.com -s vuln -v
+
+# Then analyze everything
+./seckit analyse
 ```
 
 ## Output Files
@@ -90,10 +108,13 @@
 scan_results/
 ├── scan_report_YYYYMMDD_HHMMSS.txt              # Main findings report
 ├── scan_log_YYYYMMDD_HHMMSS.log                 # Detailed activities
-├── nmap_target_com_YYYYMMDD_HHMMSS.txt          # Nmap output
-├── directories_target_com_YYYYMMDD_HHMMSS.txt   # Directory findings
-├── subdomains_target_com_YYYYMMDD_HHMMSS.txt    # Subdomain results
-└── vulnerabilities_target_com_YYYYMMDD_HHMMSS.txt # Vulnerability findings
+├── nmap_target_YYYYMMDD_HHMMSS.txt              # Nmap output
+├── directories_target_YYYYMMDD_HHMMSS.txt       # Directory findings
+├── subdomains_target_YYYYMMDD_HHMMSS.txt        # Subdomain results
+└── vulnerabilities_target_YYYYMMDD_HHMMSS.txt   # Vulnerability findings
+
+analysis_reports/
+└── analysis_YYYYMMDD_HHMMSS.txt                 # Professional analysis report
 ```
 
 ### View Results

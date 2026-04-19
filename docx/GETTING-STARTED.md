@@ -1,4 +1,4 @@
-# Getting Started Guide - Reconnaissance & Vulnerability Scanner
+# Getting Started Guide - SecKit Security Toolkit
 
 A complete guide to setting up and using the professional reconnaissance and vulnerability scanning toolkit.
 
@@ -6,18 +6,23 @@ A complete guide to setting up and using the professional reconnaissance and vul
 
 ### Step 1: Install Dependencies
 ```bash
-cd ~/Scripts
-bash setup-dependencies.sh
+./seckit start
 ```
 
 ### Step 2: Run Your First Scan
 ```bash
-./recon-vuln-scanner.sh -t example.com
+./seckit -t example.com
 ```
 
-### Step 3: View Results
+### Step 3: Analyze Scan Results
+```bash
+./seckit analyse
+```
+
+### Step 4: View Results
 ```bash
 cat scan_results/scan_report_*.txt | less
+cat analysis_reports/analysis_*.txt | less
 ```
 
 ## 🔧 Complete Setup
@@ -33,54 +38,46 @@ cat scan_results/scan_report_*.txt | less
 
 #### 1. Verify Files
 ```bash
-ls -la ~/Scripts/
+ls -la
 # Should show:
-# - recon-vuln-scanner.sh
-# - setup-dependencies.sh
-# - vulnerability-analyzer.sh
+# - seckit (main tool, executable)
+# - 3_analyzer.sh (optional, functionality now in seckit)
 # - README.md
-# - QUICK-REFERENCE.md
-# - config.template
-# - GETTING-STARTED.md (this file)
+# - LICENSE
 ```
 
 #### 2. Make Scripts Executable
 ```bash
-chmod +x ~/Scripts/*.sh
+chmod +x seckit
 ```
 
-#### 3. Install Required Tools
+#### 3. Install Required Tools via SecKit
 ```bash
-# Option A: Automatic installation
-cd ~/Scripts
-bash setup-dependencies.sh
+# Automatic installation
+./seckit start
 
-# Option B: Manual installation for Ubuntu/Debian
-sudo apt-get update
-sudo apt-get install -y nmap curl dnsutils python3
-
-# Option C: Manual installation for CentOS/RHEL
-sudo yum install -y nmap curl bind-utils python3
-
-# Option D: Manual installation for macOS
-brew install nmap curl bind-tools python3
+# The script will detect your OS and install:
+# - nmap (port scanning)
+# - curl (HTTP requests)
+# - dnsutils/bind-tools (DNS queries)
+# - python3 (utility scripts)
 ```
 
 #### 4. Verify Installation
 ```bash
-./recon-vuln-scanner.sh -h
+./seckit -h
 ```
 
-## 📚 Understanding the Tools
+## 📚 Understanding the Tool
 
-### Main Scanner: `recon-vuln-scanner.sh`
-The primary reconnaissance and vulnerability assessment tool.
+### SecKit: All-in-One Security Toolkit
+SecKit combines three powerful functions into a single command-line tool.
 
-#### Capabilities:
-1. **Port & Service Scanning** - Uses Nmap for comprehensive port discovery
-2. **Directory Enumeration** - Brute-forces directories on web services
-3. **Subdomain Discovery** - Enumerates DNS subdomains
-4. **OWASP Top 10 Assessment** - Tests for common web vulnerabilities
+#### Core Capabilities:
+1. **Dependency Setup** - Automated installation of required tools
+2. **Reconnaissance Scanning** - Port scanning, directory enumeration, subdomain discovery
+3. **Vulnerability Assessment** - OWASP Top 10 testing
+4. **Analysis & Reporting** - Risk calculation and remediation recommendations
 
 #### Key Features:
 - Automatic protocol detection (HTTP/HTTPS)
@@ -88,16 +85,7 @@ The primary reconnaissance and vulnerability assessment tool.
 - Comprehensive logging
 - Timestamped results
 - Color-coded output
-
-### Vulnerability Analyzer: `vulnerability-analyzer.sh`
-Processes and analyzes scan results to provide actionable insights.
-
-#### Features:
-- Risk score calculation
-- Vulnerability categorization
-- Remediation recommendations
-- Threat assessment
-- Summary reports
+- Professional risk assessment
 
 ### Support Files:
 - **README.md** - Full documentation
