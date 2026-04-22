@@ -39,20 +39,20 @@
 
 ```bash
 # Standard directory brute force
-./seckit -t example.com -s directories
+./seckit -t example.com -s dir
 
 # With verbose output
-./seckit -t example.com -s directories -v
+./seckit -t example.com -s dir -v
 ```
 
 ### Subdomain Discovery
 
 ```bash
 # Enumerate subdomains
-./seckit -t example.com -s subdomains
+./seckit -t example.com -s dom
 
 # For IP addresses (reverse DNS)
-./seckit -t 192.168.1.100 -s subdomains
+./seckit -t 192.168.1.100 -s dom
 ```
 
 ### Vulnerability Scanning
@@ -63,6 +63,19 @@
 
 # With verbose output
 ./seckit -t example.com -s vuln -v
+```
+
+### Multiple Scans
+
+```bash
+# Combine ports and directories
+./seckit -t example.com -s ports,dir
+
+# Combine ports, directories, and vulnerabilities
+./seckit -t example.com -s ports,dir,vuln
+
+# Combine all subdomains and vulnerabilities
+./seckit -t example.com -s dom,vuln
 ```
 
 ### Analysis & Reporting
@@ -90,26 +103,25 @@
 ### Sequential Scanning
 
 ```bash
-# Ports first, then directories
+# Run scans one by one
 ./seckit -t example.com -s ports
-./seckit -t example.com -s directories
+./seckit -t example.com -s dir
 
-# All subdomains then vulnerabilities
-./seckit -t example.com -s subdomains
-./seckit -t example.com -s vuln
+# Or run multiple scans together
+./seckit -t example.com -s ports,dir
 ```
 
 ### Full Investigation
 
 ```bash
-# Top ports with directories + subdomains + OWASP Top 10
-./seckit -t target.com -s ports -p 1-1000
-./seckit -t target.com -s directories
-./seckit -t target.com -s subdomains
-./seckit -t target.com -s vuln -v
+# Run all scans in one command
+./seckit -t target.com -s all -v
 
-# Then analyze everything
-./seckit analyse
+# Or run specific combination of scans
+./seckit -t target.com -s ports,dir,dom,vuln
+
+# Quick focus on web and vulnerabilities
+./seckit -t target.com -s dir,vuln -v
 ```
 
 ## Output Files
@@ -197,7 +209,7 @@ for file in scan_results/*; do echo "=== $file ==="; head -20 "$file"; done
 
 ```bash
 # Web app focused scan
-./seckit -t webapp.target.com -s directories
+./seckit -t webapp.target.com -s dir
 ./seckit -t webapp.target.com -s vuln -v
 
 # Investigate findings
@@ -208,7 +220,7 @@ cat scan_results/vulnerabilities_*.txt
 
 ```bash
 # Find all subdomains and check services
-./seckit -t target.com -s subdomains
+./seckit -t target.com -s dom
 ./seckit -t target.com -s ports -p 1-1000
 ```
 
@@ -304,7 +316,7 @@ sudo ./setup-dependencies.sh
 | Option | Description |
 |--------|-------------|
 | TARGET | Required - Must be valid IP or domain |
-| -s/--scan | all\|ports\|directories\|subdomains\|vuln |
+| -s/--scan | all\|ports\|dir\|dom\|vuln |
 | -p/--ports | Port range, e.g., 1-1000 or 22,80,443 |
 | -T/--threads | Number of parallel threads (default 10) |
 | -v/--verbose | Enable verbose output |

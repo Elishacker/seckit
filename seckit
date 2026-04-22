@@ -133,7 +133,8 @@ ${YELLOW}Usage:${NC}
 
 ${YELLOW}Scan Options:${NC}
     -t, --target <target>      Target IP address or domain (REQUIRED for scan)
-    -s, --scan <type>          Scan type: all, ports, directories, subdomains, vuln
+    -s, --scan <type>          Scan type: all, ports, dir, dom, vuln
+                               Multiple scans can be specified with comma (e.g., ports,dir,vuln)
                                (Default: all)
     -p, --ports <range>        Port range (Default: 1-65535)
                                Example: 1-1000, 22,80,443,3306
@@ -145,14 +146,16 @@ ${YELLOW}Examples:${NC}
     $0 start                                    # Setup dependencies
     $0 -t 192.168.1.100                         # Full scan
     $0 -t example.com -s ports -p 1-1000        # Port scan only
+    $0 -t example.com -s ports,dir              # Port + directory scan
+    $0 -t example.com -s ports,dir,vuln         # Port, directory, and vulnerability scans
     $0 -t 10.0.0.5 -s all -T 20 -v              # Full scan with threads
     $0 analyse                                  # Analyze latest scan results
 
 ${YELLOW}Scan Types:${NC}
-    all            - Run all scans (ports, directories, subdomains, vulnerabilities)
+    all            - Run all scans (ports, dir, dom, vulnerabilities)
     ports          - Port and service scanning
-    directories    - Directory enumeration
-    subdomains     - Subdomain discovery
+    dir            - Directory enumeration
+    dom            - Subdomain discovery
     vuln           - OWASP Top 10 vulnerability scanning
 
 ${NC}
@@ -1107,29 +1110,32 @@ main() {
     SCAN_TYPE="${SCAN_TYPE:-all}"
     
     # Execute scans based on type
-    case $SCAN_TYPE in
-        all)
-            scan_ports "$TARGET" "$PORT_RANGE"
-            scan_directories "$TARGET"
-            scan_subdomains "$TARGET"
-            scan_owasp_vulnerabilities "$TARGET"
-            ;;
-        ports)
-            scan_ports "$TARGET" "$PORT_RANGE"
-            ;;
-        directories)
-            scan_directories "$TARGET"
-            ;;
-        subdomains)
-            scan_subdomains "$TARGET"
-            ;;
-        vuln)
-            scan_owasp_vulnerabilities "$TARGET"
-            ;;
-        *)
-            error_exit "Unknown scan type: $SCAN_TYPE"
-            ;;
-    esac
+    if [[ "$SCAN_TYPE" == "all" ]]; then
+        SCAN_TYPE="ports,dir,dom,vuln"
+    fi
+    
+    # Handle multiple scans separated by comma
+    IFS=',' read -ra SCANS <<< "$SCAN_TYPE"
+    for scan in "${SCANS[@]}"; do
+        scan=$(echo "$scan" | xargs)  # Trim whitespace
+        case $scan in
+            ports)
+                scan_ports "$TARGET" "$PORT_RANGE"
+                ;;
+            dir|directories)
+                scan_directories "$TARGET"
+                ;;
+            dom|subdomains)
+                scan_subdomains "$TARGET"
+                ;;
+            vuln)
+                scan_owasp_vulnerabilities "$TARGET"
+                ;;
+            *)
+                error_exit "Unknown scan type: $scan"
+                ;;
+        esac
+    done
     
     # Final summary
     echo -e "\n${CYAN}═══════════════════════════════════════════════════════════════════${NC}"

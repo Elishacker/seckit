@@ -1,0 +1,14 @@
+# Nmap 7.99 scan initiated Wed Apr 22 09:24:21 2026 as: /usr/lib/nmap/nmap --privileged -sV -sC -p 1-1000 -oN /home/r3dh4t/Projects/ToolsDevs/seckit/scan_results/nmap_staging_microlend_online_20260422_092420.txt staging.microlend.online
+Nmap scan report for staging.microlend.online (167.86.100.125)
+Host is up (0.22s latency).
+rDNS record for 167.86.100.125: vmi3233388.contaboserver.net
+Not shown: 999 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.15 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   256 75:a0:91:4d:d8:3f:39:0d:d5:37:9a:de:c5:27:f3:a7 (ECDSA)
+|_  256 7e:ad:62:7d:be:cb:77:00:9b:5b:5f:72:e3:56:be:51 (ED25519)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Apr 22 09:24:36 2026 -- 1 IP address (1 host up) scanned in 15.66 seconds
