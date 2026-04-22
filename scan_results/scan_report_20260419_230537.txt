@@ -1,8 +1,0 @@
-═══════════════════════════════════════════════════════════════════
-RECONNAISSANCE & VULNERABILITY SCAN REPORT
-═══════════════════════════════════════════════════════════════════
-Target: staging.microlend.online
-Scan Date: Sun Apr 19 11:05:37 PM EAT 2026
-Scan Type: vulnerability
-═══════════════════════════════════════════════════════════════════
-

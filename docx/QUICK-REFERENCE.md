@@ -3,12 +3,14 @@
 ## One-Liner Commands
 
 ### Setup & Initialization
+
 ```bash
 # Install dependencies (run once)
 ./seckit start
 ```
 
 ### Basic Scans
+
 ```bash
 # Full reconnaissance on domain
 ./seckit -t example.com
@@ -21,6 +23,7 @@
 ```
 
 ### Port Scanning
+
 ```bash
 # Scan top 1000 ports
 ./seckit -t target.com -s ports -p 1-1000
@@ -33,6 +36,7 @@
 ```
 
 ### Directory Enumeration
+
 ```bash
 # Standard directory brute force
 ./seckit -t example.com -s directories
@@ -42,6 +46,7 @@
 ```
 
 ### Subdomain Discovery
+
 ```bash
 # Enumerate subdomains
 ./seckit -t example.com -s subdomains
@@ -51,6 +56,7 @@
 ```
 
 ### Vulnerability Scanning
+
 ```bash
 # OWASP Top 10 scan
 ./seckit -t example.com -s vuln
@@ -60,6 +66,7 @@
 ```
 
 ### Analysis & Reporting
+
 ```bash
 # Analyze latest scan results
 ./seckit analyse
@@ -71,6 +78,7 @@
 ## Advanced Usage
 
 ### Multi-Threading
+
 ```bash
 # Faster scans with 20 threads
 ./seckit -t example.com -T 20
@@ -80,6 +88,7 @@
 ```
 
 ### Sequential Scanning
+
 ```bash
 # Ports first, then directories
 ./seckit -t example.com -s ports
@@ -91,6 +100,7 @@
 ```
 
 ### Full Investigation
+
 ```bash
 # Top ports with directories + subdomains + OWASP Top 10
 ./seckit -t target.com -s ports -p 1-1000
@@ -118,6 +128,7 @@ analysis_reports/
 ```
 
 ### View Results
+
 ```bash
 # Read main report
 cat scan_results/scan_report_*.txt
@@ -132,6 +143,7 @@ ls -lh scan_results/
 ## Common Findings Interpretation
 
 ### Port Status Codes
+
 | Status | Meaning |
 |--------|---------|
 | open | Port is listening |
@@ -141,6 +153,7 @@ ls -lh scan_results/
 | unfiltered | Port exists but not probed |
 
 ### HTTP Status Codes
+
 | Code | Meaning |
 |------|---------|
 | 200 | OK - Page exists |
@@ -150,6 +163,7 @@ ls -lh scan_results/
 | 500 | Server error |
 
 ### Vulnerability Severity
+
 | Level | Color | Action |
 |-------|-------|--------|
 | CRITICAL | 🔴 Red | Fix immediately |
@@ -160,74 +174,82 @@ ls -lh scan_results/
 ## Real-World Scenarios
 
 ### Scenario 1: Quick Security Check
+
 ```bash
 # Initial assessment of known web app
-./recon-vuln-scanner.sh -t myapp.example.com -s all -v
+./seckit -t myapp.example.com -s all -v
 
 # Check results
 cat scan_results/scan_report_*.txt | less
 ```
 
 ### Scenario 2: Deep Network Reconnaissance
+
 ```bash
 # Comprehensive internal network scan
-./recon-vuln-scanner.sh -t 192.168.1.100 -s all -T 20 -p 1-5000
+./seckit -t 192.168.1.100 -s all -T 20 -p 1-5000
 
 # Review everything
 for file in scan_results/*; do echo "=== $file ==="; head -20 "$file"; done
 ```
 
 ### Scenario 3: Targeted Web Application Assessment
+
 ```bash
 # Web app focused scan
-./recon-vuln-scanner.sh -t webapp.target.com -s directories
-./recon-vuln-scanner.sh -t webapp.target.com -s vuln -v
+./seckit -t webapp.target.com -s directories
+./seckit -t webapp.target.com -s vuln -v
 
 # Investigate findings
 cat scan_results/vulnerabilities_*.txt
 ```
 
 ### Scenario 4: Subdomain Mapping
+
 ```bash
 # Find all subdomains and check services
-./recon-vuln-scanner.sh -t target.com -s subdomains
-./recon-vuln-scanner.sh -t target.com -s ports -p 1-1000
+./seckit -t target.com -s subdomains
+./seckit -t target.com -s ports -p 1-1000
 ```
 
 ## Automation Examples
 
 ### Run Daily Scan
+
 ```bash
 #!/bin/bash
 TARGET="example.com"
 TIMESTAMP=$(date +"%Y%m%d")
 RESULTS="/var/log/security-scans/${TIMESTAMP}_${TARGET}.txt"
 
-mkdir -p /var/log/security-scans
-/home/user/Scripts/recon-vuln-scanner.sh -t "$TARGET" > "$RESULTS" 2>&1
+mkdir -p /var/log/security-scans/
+/home/user/Scripts/seckit -t "$TARGET" > "$RESULTS" 2>&1
+
 echo "Scan complete: $RESULTS" | mail -s "Daily Scan: $TARGET" admin@example.com
 ```
 
 ### Compare Scans Over Time
+
 ```bash
 # Store baseline
-./recon-vuln-scanner.sh -t target.com -s all 2>&1 | tee baseline_$(date +%Y%m%d).txt
+./seckit -t target.com -s all 2>&1 | tee baseline_$(date +%Y%m%d).txt
 
 # Future comparison
-./recon-vuln-scanner.sh -t target.com -s all 2>&1 | tee current_$(date +%Y%m%d).txt
+./seckit -t target.com -s all 2>&1 | tee current_$(date +%Y%m%d).txt
 
 # Diff the findings
 diff baseline_*.txt current_*.txt
 ```
 
 ### Batch Scanning Multiple Targets
+
 ```bash
 #!/bin/bash
 TARGETS=("target1.com" "target2.com" "target3.com")
 
 for target in "${TARGETS[@]}"; do
     echo "Scanning $target..."
-    ./recon-vuln-scanner.sh -t "$target" -s all
+    ./seckit -t "$target" -s all
     sleep 300  # Wait 5 minutes between scans
 done
 ```
@@ -235,15 +257,17 @@ done
 ## Troubleshooting Quick Fixes
 
 ### Script Won't Run
+
 ```bash
 # Make it executable
-chmod +x recon-vuln-scanner.sh
+chmod +x seckit
 
 # Or run with bash explicitly
-bash recon-vuln-scanner.sh -t target.com
+bash seckit -t target.com
 ```
 
 ### Missing Nmap
+
 ```bash
 # Ubuntu/Debian
 sudo apt-get install nmap
@@ -253,6 +277,7 @@ bash setup-dependencies.sh
 ```
 
 ### Connection Timeouts
+
 ```bash
 # Verify target reachability
 ping target.com
@@ -265,9 +290,10 @@ nc -zv target.com 80
 ```
 
 ### Permission Denied Errors
+
 ```bash
 # Some scans need sudo
-sudo ./recon-vuln-scanner.sh -t target.com
+sudo ./seckit -t target.com
 
 # Or install with sudo access configured
 sudo ./setup-dependencies.sh
@@ -275,18 +301,18 @@ sudo ./setup-dependencies.sh
 
 ## Important Options Reference
 
-```
-TARGET           : Required - Must be valid IP or domain
--s/--scan       : all|ports|directories|subdomains|vuln
--p/--ports      : Port range, e.g., 1-1000 or 22,80,443
--T/--threads    : Number of parallel threads (default 10)
--v/--verbose    : Enable verbose output
--h/--help       : Show full help menu
-```
+| Option | Description |
+|--------|-------------|
+| TARGET | Required - Must be valid IP or domain |
+| -s/--scan | all\|ports\|directories\|subdomains\|vuln |
+| -p/--ports | Port range, e.g., 1-1000 or 22,80,443 |
+| -T/--threads | Number of parallel threads (default 10) |
+| -v/--verbose | Enable verbose output |
+| -h/--help | Show full help menu |
 
 ## Security Best Practices
 
-✅ **DO:**
+### ✅ DO:
 - Get written authorization first
 - Document scope with client
 - Run during agreed times
@@ -294,7 +320,7 @@ TARGET           : Required - Must be valid IP or domain
 - Report findings responsibly
 - Test in controlled environments first
 
-❌ **DON'T:**
+### ❌ DON'T:
 - Scan without permission
 - Cross outside defined scope
 - Run on production without approval
@@ -307,11 +333,12 @@ TARGET           : Required - Must be valid IP or domain
 All results are saved in: `~/Scripts/scan_results/`
 
 Access them quickly:
+
 ```bash
 cd ~/Scripts/scan_results
 ls -lt              # View latest files
-cat *.txt          # View all reports
-tail -f scan_log_* # Watch live log
+cat *.txt           # View all reports
+tail -f scan_log_*  # Watch live log
 ```
 
 ## Legal Reminder
@@ -326,6 +353,4 @@ Always:
 - Follow responsible disclosure
 - Comply with local laws
 
----
-
-**For full documentation, see: README.md**
+For full documentation, see: [README.md](README.md)

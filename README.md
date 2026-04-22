@@ -73,11 +73,9 @@ brew install nmap curl bind-tools python3
 
 ## Installation
 
-1. **Clone the repository:**
+1. **Make the script executable:**
 ```bash
-git clone git@github.com:Elishacker/3lishack3r.git ~/3lishack3r
-cd ~/3lishack3r
-chmod +x seckit 3_analyzer.sh
+chmod +x seckit
 ```
 
 2. **Run setup to install dependencies:**
@@ -238,16 +236,10 @@ cp my_wordlist.txt scan_results/directory_wordlist.txt
 ./seckit -t example.com -s directories
 ```
 
-### Generate Analysis Report
-```bash
-# After scanning, analyze results with the analyzer script
-./3_analyzer.sh
-```
-
 ### Scheduling Regular Scans
 ```bash
 # Add to crontab for daily scans
-0 2 * * * /home/user/3lishack3r/seckit -t example.com >> /var/log/seckit-scan.log 2>&1
+0 2 * * * /path/to/seckit -t example.com >> /var/log/seckit-scan.log 2>&1
 ```
 
 ## Troubleshooting
@@ -333,25 +325,21 @@ Identifies exposed logging endpoints that could leak sensitive information.
 ## File Structure
 
 ```
-3lishack3r/
-├── seckit                       # Combined setup & scanner (all-in-one)
-├── 3_analyzer.sh                # Vulnerability analyzer & report generator
-├── README.md                    # This file
-├── LICENSE                      # License file
+seckit/
+├── seckit                       # Main scanner executable
+├── README.md                    # Documentation (this file)
+├── LICENSE                      # License information
+├── QUICK-REFERENCE.md           # Quick reference guide
 ├── scan_results/                # Scanner output directory (auto-created)
-│   ├── scan_report_*.txt
-│   ├── scan_log_*.txt
-│   ├── nmap_*.txt
-│   ├── directories_*.txt
-│   ├── subdomains_*.txt
-│   └── vulnerabilities_*.txt
-├── analysis_reports/            # Analyzer output directory (auto-created)
-│   └── analysis_*.txt
-└── docx/                        # Documentation files
-    ├── GETTING-STARTED.md
+│   ├── scan_report_*.txt        # Main findings report
+│   ├── scan_log_*.txt           # Detailed activity log
+│   ├── nmap_*.txt               # Port scan results
+│   ├── directories_*.txt        # Directory enumeration findings
+│   ├── subdomains_*.txt         # Subdomain discovery results
+│   └── vulnerabilities_*.txt    # Vulnerability scan findings
+└── docx/                        # Optional documentation files
     ├── QUICK-REFERENCE.md
-    ├── QUICKSTART
-    └── TOOLKIT-SUMMARY.md
+    └── config.template
 ```
 
 ## Contributing
@@ -366,7 +354,7 @@ To improve this tool:
 
 1. **Setup** - Run `./seckit start` to install all dependencies
 2. **Scan** - Run `./seckit -t <target>` to perform reconnaissance and vulnerability scanning
-3. **Analyze** - Run `./3_analyzer.sh` to generate comprehensive reports from scan results
+3. **Results** - Check `scan_results/` directory for detailed reports and findings
 
 ## Version History
 

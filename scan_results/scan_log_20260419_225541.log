@@ -1,9 +1,0 @@
-[2026-04-19 22:55:41] [INFO] Starting reconnaissance and vulnerability scan on staging.microlend.online
-[2026-04-19 22:55:41] [INFO] Scan initiated for target: staging.microlend.online
-[2026-04-19 22:55:41] [INFO] Starting subdomain discovery for staging.microlend.online
-[2026-04-19 22:55:41] [INFO] Performing DNS enumeration...
-[2026-04-19 22:56:21] [INFO] Extracting SPF, MX, and other DNS records...
-[2026-04-19 22:56:22] [INFO] Subdomain enumeration completed. Results saved to /home/r3dh4t/Projects/ToolsDevs/3lishack3r/scan_results/subdomains_staging_microlend_online_20260419_225541.txt
-[2026-04-19 22:56:22] [INFO] Report saved to: /home/r3dh4t/Projects/ToolsDevs/3lishack3r/scan_results/scan_report_20260419_225541.txt
-[2026-04-19 22:56:22] [INFO] Detailed log saved to: /home/r3dh4t/Projects/ToolsDevs/3lishack3r/scan_results/scan_log_20260419_225541.log
-[2026-04-19 22:56:22] [INFO] Results directory: /home/r3dh4t/Projects/ToolsDevs/3lishack3r/scan_results
