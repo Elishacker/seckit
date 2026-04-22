@@ -105,7 +105,8 @@ This installs all required dependencies (nmap, curl, dnsutils, python3).
 ### Options
 ```
 -t, --target <target>      Target IP address or domain (REQUIRED)
--s, --scan <type>          Scan type: all, ports, directories, subdomains, vuln
+-s, --scan <type>          Scan type: all, ports, dir, dom, vuln
+                           Multiple scans can be specified with comma (e.g., ports,dir,vuln)
                            (Default: all)
 -p, --ports <range>        Port range (Default: 1-65535)
                            Example: 1-1000, 22,80,443,3306
@@ -133,12 +134,12 @@ This installs all required dependencies (nmap, curl, dnsutils, python3).
 
 **4. Directory Enumeration**
 ```bash
-./seckit -t example.com -s directories
+./seckit -t example.com -s dir
 ```
 
 **5. Subdomain Discovery**
 ```bash
-./seckit -t example.com -s subdomains
+./seckit -t example.com -s dom
 ```
 
 **6. OWASP Vulnerability Scan**
@@ -151,7 +152,17 @@ This installs all required dependencies (nmap, curl, dnsutils, python3).
 ./seckit -t 192.168.1.100 -s all -v
 ```
 
-**8. Scan with Multiple Threads**
+**8. Multiple Specific Scans**
+```bash
+./seckit -t example.com -s ports,dir
+```
+
+**9. Multiple Scans with Threads**
+```bash
+./seckit -t example.com -s ports,dir,vuln -T 20
+```
+
+**10. Scan with Multiple Threads**
 ```bash
 ./seckit -t example.com -s all -T 20
 ```
@@ -221,6 +232,23 @@ This tool is intended for authorized security testing only. Unauthorized access 
 - Work with security teams professionally
 
 ## Advanced Usage
+
+### Multiple Scans in One Command
+You can now run multiple scan types together using comma-separated values:
+
+```bash
+# Port scan + Directory enumeration
+./seckit -t example.com -s ports,dir
+
+# Port + Directory + Subdomain scans
+./seckit -t example.com -s ports,dir,dom
+
+# All specific scans (equivalent to -s all)
+./seckit -t example.com -s ports,dir,dom,vuln
+
+# Web-focused scans with verbosity
+./seckit -t example.com -s dir,vuln -v
+```
 
 ### Custom Wordlists
 Place custom wordlists in the `scan_results/` directory and reference them:

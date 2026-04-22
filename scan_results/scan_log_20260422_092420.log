@@ -1,0 +1,12 @@
+[2026-04-22 09:24:20] [INFO] Starting reconnaissance and vulnerability scan on staging.microlend.online
+[2026-04-22 09:24:20] [INFO] Scan initiated for target: staging.microlend.online
+[2026-04-22 09:24:20] [INFO] Initiating port scan on staging.microlend.online (Range: 1-1000)
+[2026-04-22 09:24:20] [INFO] Running Nmap scan with service detection...
+[2026-04-22 09:24:36] [INFO] Port scan completed. Results saved to /home/r3dh4t/Projects/ToolsDevs/seckit/scan_results/nmap_staging_microlend_online_20260422_092420.txt
+[2026-04-22 09:24:36] [INFO] Starting directory brute-forcing on staging.microlend.online
+[2026-04-22 09:24:38] [WARN] No web service detected on standard ports (80, 443)
+[2026-04-22 09:24:38] [INFO] Starting OWASP Top 10 vulnerability assessment
+[2026-04-22 09:24:39] [WARN] No web service accessible on staging.microlend.online
+[2026-04-22 09:24:39] [INFO] Report saved to: /home/r3dh4t/Projects/ToolsDevs/seckit/scan_results/scan_report_20260422_092420.txt
+[2026-04-22 09:24:39] [INFO] Detailed log saved to: /home/r3dh4t/Projects/ToolsDevs/seckit/scan_results/scan_log_20260422_092420.log
+[2026-04-22 09:24:39] [INFO] Results directory: /home/r3dh4t/Projects/ToolsDevs/seckit/scan_results
