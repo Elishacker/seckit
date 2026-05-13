@@ -21,7 +21,7 @@ NC='\033[0m'
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-OUTPUT_DIR="${SCRIPT_DIR}/scan_results"
+OUTPUT_DIR="${PWD}/scan_results"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 REPORT_FILE="${OUTPUT_DIR}/scan_report_${TIMESTAMP}.txt"
 LOG_FILE="${OUTPUT_DIR}/scan_log_${TIMESTAMP}.log"

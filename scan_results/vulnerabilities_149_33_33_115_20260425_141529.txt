@@ -1,0 +1,3 @@
+Clickjacking: X-Frame-Options header missing
+Missing Headers: HSTS CSP X-Content-Type-Options
+[NOTE] Manual XXE testing required for specific endpoints
