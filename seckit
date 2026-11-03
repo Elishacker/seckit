@@ -3,6 +3,7 @@
 ################################################################################
 # seckit - Security Toolkit
 # Combined Setup & Reconnaissance Scanner
+# Developed by: Elisha Mahenda (Elifaster InfoSec)
 # Author: Elifaster InfoSec
 # Description: All-in-one security tool for dependencies setup and vulnerability
 #              scanning following OWASP Top 10 guidelines
